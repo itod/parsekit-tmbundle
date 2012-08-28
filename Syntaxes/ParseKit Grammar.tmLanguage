@@ -15,59 +15,101 @@
 	<array>
 		<dict>
 			<key>match</key>
-			<string>\b(if|while|for|return)\b</string>
+			<string>\;</string>
 			<key>name</key>
-			<string>keyword.control.parsekit-grammar</string>
+			<string>punctuation.terminator.statement.parsekit-grammar</string>
 		</dict>
+		<dict>
+			<key>match</key>
+			<string>\{|\}</string>
+			<key>name</key>
+			<string>meta.brace.curly.parsekit-grammar</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#values</string>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<key>comment</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>/\*</string>
+					<key>captures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.comment.parsekit-grammar</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>\*/</string>
+					<key>name</key>
+					<string>comment.block.parsekit-grammar</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>(^[ \t]+)?(?=//)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.whitespace.comment.leading.parsekit-grammar</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?!\G)</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>begin</key>
+							<string>//</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.definition.comment.parsekit-grammar</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>\n</string>
+							<key>name</key>
+							<string>comment.line.double-slash.parsekit-grammar</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>match</key>
+									<string>(?&gt;\\\s*\n)</string>
+									<key>name</key>
+									<string>punctuation.separator.continuation.parsekit-grammar</string>
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>constant</key>
 		<dict>
 			<key>match</key>
 			<string>\b(Word|LowercaseWord|UppercaseWord|Number|QuotedString|Symbol|S|Comment|DelimitedString|Any)\b</string>
 			<key>name</key>
 			<string>constant.language.parsekit-grammar</string>
 		</dict>
-		<dict>
-			<key>comment</key>
-			<string>handles integer and decimal numbers</string>
-			<key>match</key>
-			<string>(?x:         # turn on extended mode
-	                   -?         # an optional minus
-	                   (?:
-	                     0        # a zero
-	                     |        # ...or...
-	                     [1-9]    # a 1-9 character
-	                     \d*      # followed by zero or more digits
-	                   )
-	                   (?:
-	                     \.       # a period
-	                     \d+      # followed by one or more digits
-	                     (?:
-	                       [eE]   # an e character
-	                       [+-]?  # followed by an option +/-
-	                       \d+    # followed by one or more digits
-	                     )?       # make exponent optional
-	                   )?         # make decimal portion optional
-	                 )</string>
-			<key>name</key>
-			<string>constant.numeric.parsekit-grammar</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#string-double</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#string-single</string>
-		</dict>
-	</array>
-	<key>repository</key>
-	<dict>
 		<key>escape</key>
 		<dict>
 			<key>match</key>
 			<string>(?x:                # turn on extended mode
                       \\                # a literal backslash
                       (?:               # ...followed by...
-					  [\\/bfnrt]     # one of these characters
+                      [\\/bfnrt]     # one of these characters
                       |               # ...or...
                       u               # a u
                       [0-9a-fA-F]{4}  # and four hex digits
@@ -96,6 +138,87 @@
 			<string>\\.</string>
 			<key>name</key>
 			<string>invalid.illegal.unrecognized-string-escape.parsekit-grammar</string>
+		</dict>
+		<key>keyword</key>
+		<dict>
+			<key>match</key>
+			<string>\b@\w+\b</string>
+			<key>name</key>
+			<string>keyword.control.parsekit-grammar</string>
+		</dict>
+		<key>numeric</key>
+		<dict>
+			<key>comment</key>
+			<string>handles integer and decimal numbers</string>
+			<key>match</key>
+			<string>(?x:         # turn on extended mode
+                       -?         # an optional minus
+                       (?:
+                         0        # a zero
+                         |        # ...or...
+                         [1-9]    # a 1-9 character
+                         \d*      # followed by zero or more digits
+                       )
+                       (?:
+                         \.       # a period
+                         \d+      # followed by one or more digits
+                         (?:
+                           [eE]   # an e character
+                           [+-]?  # followed by an option +/-
+                           \d+    # followed by one or more digits
+                         )?       # make exponent optional
+                       )?         # make decimal portion optional
+                     )</string>
+			<key>name</key>
+			<string>constant.numeric.parsekit-grammar</string>
+		</dict>
+		<key>parens</key>
+		<dict>
+			<key>begin</key>
+			<string>\(</string>
+			<key>end</key>
+			<string>\)</string>
+			<key>name</key>
+			<string>meta.parens.parsekit-grammar</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#values</string>
+				</dict>
+			</array>
+		</dict>
+		<key>regexp</key>
+		<dict>
+			<key>begin</key>
+			<string>(?&lt;=[=(:]|^|return|&amp;&amp;|\|\||!)\s*(/)(?![/*+{}?])</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.parsekit-grammar</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>(/)[igm]*</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.parsekit-grammar</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>string.regexp.parsekit-grammar</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.parsekit-grammar.regexp</string>
+				</dict>
+			</array>
 		</dict>
 		<key>string-double</key>
 		<dict>
@@ -176,6 +299,51 @@
 					<string>#invalid-escape</string>
 				</dict>
 			</array>
+		</dict>
+		<key>values</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#regexp</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#comment</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#constant</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#keyword</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#variable</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#numeric</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#string-double</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#string-single</string>
+				</dict>
+			</array>
+		</dict>
+		<key>variable</key>
+		<dict>
+			<key>match</key>
+			<string>\b\w+\b</string>
+			<key>name</key>
+			<string>variable.language.parsekit-grammar</string>
 		</dict>
 	</dict>
 	<key>scopeName</key>
