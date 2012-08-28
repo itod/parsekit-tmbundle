@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>grammar</string>
+		<string>g</string>
+	</array>
+	<key>keyEquivalent</key>
+	<string>~@G</string>
+	<key>name</key>
+	<string>ParseKit Grammar</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>\b(foo|if|while|for|return)\b</string>
+			<key>name</key>
+			<string>keyword.control.parsekit-grammar</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(Word|LowercaseWord|UppercaseWord|Number|QuotedString|Symbol|S|Comment|DelimitedString|Any)\b</string>
+			<key>name</key>
+			<string>constant.language.parsekit-grammar</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>handles integer and decimal numbers</string>
+			<key>match</key>
+			<string>(?x:         # turn on extended mode
+	                   -?         # an optional minus
+	                   (?:
+	                     0        # a zero
+	                     |        # ...or...
+	                     [1-9]    # a 1-9 character
+	                     \d*      # followed by zero or more digits
+	                   )
+	                   (?:
+	                     \.       # a period
+	                     \d+      # followed by one or more digits
+	                     (?:
+	                       [eE]   # an e character
+	                       [+-]?  # followed by an option +/-
+	                       \d+    # followed by one or more digits
+	                     )?       # make exponent optional
+	                   )?         # make decimal portion optional
+	                 )</string>
+			<key>name</key>
+			<string>constant.numeric.parsekit-grammar</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>"</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.parsekit-grammar</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>"</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.parsekit-grammar</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>string.quoted.double.parsekit-grammar</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#escape</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#invalid-escape</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<key>escape</key>
+		<dict>
+			<key>match</key>
+			<string>(?x:                # turn on extended mode
+                      \\                # a literal backslash
+                      (?:               # ...followed by...
+                      ["\\/bfnrt]     # one of these characters
+                      |               # ...or...
+                      u               # a u
+                      [0-9a-fA-F]{4}  # and four hex digits
+                      )
+                   )</string>
+			<key>name</key>
+			<string>constant.character.escape.parsekit-grammar</string>
+		</dict>
+		<key>invalid-escape</key>
+		<dict>
+			<key>match</key>
+			<string>\\.</string>
+			<key>name</key>
+			<string>invalid.illegal.unrecognized-string-escape.parsekit-grammar</string>
+		</dict>
+	</dict>
+	<key>scopeName</key>
+	<string>source.parsekit-grammar</string>
+	<key>uuid</key>
+	<string>7C85D7C3-2E09-4D35-8703-CDEF0624674D</string>
+</dict>
+</plist>
