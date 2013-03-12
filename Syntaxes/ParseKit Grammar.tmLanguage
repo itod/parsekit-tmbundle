@@ -99,7 +99,7 @@
 		<key>constant</key>
 		<dict>
 			<key>match</key>
-			<string>\b(Word|LowercaseWord|UppercaseWord|Number|QuotedString|Symbol|S|Comment|DelimitedString|Any)\b</string>
+			<string>\b(Word|LowercaseWord|UppercaseWord|Number|QuotedString|Symbol|S|Comment|DelimitedString|Any|Empty|Char|Letter|Digit|Pattern)\b</string>
 			<key>name</key>
 			<string>constant.language.parsekit-grammar</string>
 		</dict>
